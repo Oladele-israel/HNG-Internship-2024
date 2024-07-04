@@ -1,12 +1,13 @@
 import express from "express";
 import axios from "axios";
 import requestIp from "request-ip";
+import dotenv from "dotenv";
 
 const app = express();
 const port = 3000;
+dotenv.config();
 
 app.use(requestIp.mw());
-const apiKey = process.env.WEATHER_API_KEY;
 
 app.get("/api/hello", async (req, res) => {
   let clientIp = req.clientIp;
@@ -15,6 +16,9 @@ app.get("/api/hello", async (req, res) => {
   if (clientIp === "::1") {
     clientIp = "8.8.8.8"; // Use a sample IP for testing, or handle differently
   }
+
+  const apiKey = process.env.WEATHER_API_KEY;
+  console.log(apiKey);
 
   try {
     const locationResponse = await axios.get(
