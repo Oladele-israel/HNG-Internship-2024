@@ -6,6 +6,7 @@ const app = express();
 const port = 3000;
 
 app.use(requestIp.mw());
+const apiKey = process.env.WEATHER_API_KEY;
 
 app.get("/api/hello", async (req, res) => {
   let clientIp = req.clientIp;
@@ -22,7 +23,7 @@ app.get("/api/hello", async (req, res) => {
     const locationData = locationResponse.data;
 
     const weatherResponse = await axios.get(
-      `http://api.weatherapi.com/v1/current.json?key=7a20b46cfcd944a792493123240407&q=${locationData.city}`
+      `http://api.weatherapi.com/v1/current.json?key=${apiKey}&q=${locationData.city}`
     );
     const weatherData = weatherResponse.data;
 
